@@ -1,11 +1,25 @@
 *.class
- .classpath
- .project
- .classpath
- target/*
+**.project
+**.classpath
+**.settings
+**target
+**bin
+**org.eclipse.osgi
+**.war
+**.jar
+**.log
+**.log.*
+target/*
  metadata/data
-
-# Package Files #
-*.jar
-*.war
-*.ear
+.metadata
+search.log*
+**.svn
+activemq-data
+logs
+.reviewboardrc
+.idea/
+**.iml
+indexes**
+/start.bat
+indexes/
+test-output
