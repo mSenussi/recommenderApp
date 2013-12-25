@@ -103,21 +103,24 @@ public class EvaluatorInto {
     
     public static void main(String[] args) {
 
-		File userPreferencesFile;
+		File userPreferencesFile, testFile;
 		try {
 
 			userPreferencesFile = new File(
 					"src/main/resources/data/dataset.txt");
+			testFile = new File(
+					"src/main/resources/data/introDataset.txt");
 
 			DataModel model =  new FileDataModel(userPreferencesFile);
+			DataModel testModel =  new FileDataModel(testFile);
 			
 //			double avarEvaScore = evalAvarage(model, 0.8, 0.3);
 //			double rMSEvaScore = evalRMS(model, 0.8, 0.3);
 //			System.out.println("AverageAbsoluteDifference: " + new DecimalFormat("##.##").format(avarEvaScore));
 //		    System.out.println("RMSDifference: " + new DecimalFormat("##.##").format(rMSEvaScore));
 		    
-			IRStatistics iRStats = evalIRStats(model);
-			System.out.println(new DecimalFormat("##.##").format(iRStats.getRecall()));
+			IRStatistics iRStats = evalIRStats(testModel);
+			System.out.println(iRStats.getRecall());
 
 		} catch (Exception e) {
 			LOG.error(e.getMessage() + "\n--------\n" + e.getStackTrace());
