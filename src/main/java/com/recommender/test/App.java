@@ -1,4 +1,4 @@
-package com.recommender;
+package com.recommender.test;
 
 import java.io.File;
 import java.util.List;

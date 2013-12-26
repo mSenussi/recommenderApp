@@ -1,15 +1,12 @@
 package com.recommender.mahout;
 
 import java.io.File;
-import java.text.DecimalFormat;
 
 import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.cf.taste.eval.DataModelBuilder;
 import org.apache.mahout.cf.taste.eval.IRStatistics;
 import org.apache.mahout.cf.taste.eval.RecommenderBuilder;
 import org.apache.mahout.cf.taste.eval.RecommenderEvaluator;
 import org.apache.mahout.cf.taste.eval.RecommenderIRStatsEvaluator;
-import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
 import org.apache.mahout.cf.taste.impl.eval.AverageAbsoluteDifferenceRecommenderEvaluator;
 import org.apache.mahout.cf.taste.impl.eval.GenericRecommenderIRStatsEvaluator;
 import org.apache.mahout.cf.taste.impl.eval.RMSRecommenderEvaluator;
@@ -19,10 +16,8 @@ import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
 import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.neighborhood.UserNeighborhood;
-import org.apache.mahout.cf.taste.recommender.IDRescorer;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
-import org.apache.mahout.common.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,7 +76,7 @@ public class EvaluatorInto {
 	}
 	
 	
-    public static IRStatistics evalIRStats(DataModel model) throws TasteException {
+    public static IRStatistics evalIRStats(DataModel model, int at,  double evalPercentage) throws TasteException {
     	
     	RecommenderIRStatsEvaluator evaluator = new GenericRecommenderIRStatsEvaluator();
     	RecommenderBuilder recommenderBuilder = new RecommenderBuilder() {
@@ -95,7 +90,7 @@ public class EvaluatorInto {
 			}
 		};
 		long start = System.currentTimeMillis();
-		IRStatistics irStatistics = evaluator.evaluate(recommenderBuilder, null, model, null, 2, GenericRecommenderIRStatsEvaluator.CHOOSE_THRESHOLD, 0.2);
+		IRStatistics irStatistics = evaluator.evaluate(recommenderBuilder, null, model, null, at, GenericRecommenderIRStatsEvaluator.CHOOSE_THRESHOLD, evalPercentage);
 		long stop = System.currentTimeMillis();
 		LOG.info(" Took: [" + (stop - start) + " millis | "+(stop - start)/1000+" Sec ]");
 		return irStatistics;
@@ -103,23 +98,28 @@ public class EvaluatorInto {
     
     public static void main(String[] args) {
 
-		File userPreferencesFile, testFile;
+		File userPreferencesFile, testFile, groupLensFile;
 		try {
 
 			userPreferencesFile = new File(
 					"src/main/resources/data/dataset.txt");
 			testFile = new File(
 					"src/main/resources/data/introDataset.txt");
+			groupLensFile = new File(
+					"src/main/resources/data/ml-100k/ua.base");
 
-			DataModel model =  new FileDataModel(userPreferencesFile);
+			DataModel model     =  new FileDataModel(userPreferencesFile);
 			DataModel testModel =  new FileDataModel(testFile);
+			DataModel gLModel   =  new FileDataModel(groupLensFile);
 			
 //			double avarEvaScore = evalAvarage(model, 0.8, 0.3);
 //			double rMSEvaScore = evalRMS(model, 0.8, 0.3);
 //			System.out.println("AverageAbsoluteDifference: " + new DecimalFormat("##.##").format(avarEvaScore));
 //		    System.out.println("RMSDifference: " + new DecimalFormat("##.##").format(rMSEvaScore));
 		    
-			IRStatistics iRStats = evalIRStats(testModel);
+			IRStatistics iRStats = evalIRStats(testModel, 2, 0.2);
+			
+			System.out.println(iRStats.getPrecision());
 			System.out.println(iRStats.getRecall());
 
 		} catch (Exception e) {
