@@ -123,7 +123,7 @@ public class EvaluatorInto {
 //			System.out.println("AverageAbsoluteDifference: " + new DecimalFormat("##.##").format(avarEvaScore));
 //		    System.out.println("RMSDifference: " + new DecimalFormat("##.##").format(rMSEvaScore));
 		    
-			IRStatistics iRStats = evalIRStats(gLModelM, 5, 0.02);
+			IRStatistics iRStats = evalIRStats(gLModelK, 5, 0.02);
 			
 			System.out.println(iRStats.getPrecision());
 			System.out.println(iRStats.getRecall());

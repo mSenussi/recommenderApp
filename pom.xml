@@ -42,8 +42,7 @@
 			<version>0.8</version>
 			<type>test-jar</type>
 			<scope>test</scope>
-		</dependency>
-		
+		</dependency>		
 		<dependency>
 			<groupId>org.apache.mahout</groupId>
 			<artifactId>mahout-examples</artifactId>
