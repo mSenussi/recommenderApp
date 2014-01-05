@@ -24,11 +24,12 @@ public class App {
 	public static void main(String[] args) {
 
 		final int UID = 1, MAX_RECOMMENDATIONS = 3;
+		final String FILE_PATH = "src/main/resources/data/gl/ratings.dat";
 		List<RecommendedItem> recommendations = null;
 		File userPreferencesFile;
 		try {
 
-			userPreferencesFile = new File("src/main/resources/data/gl/ratings.dat");
+			userPreferencesFile = new File(FILE_PATH);
 
 			DataModel dataModel = new GroupLensDataModel(userPreferencesFile);
 
