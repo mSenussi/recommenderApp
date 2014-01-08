@@ -1,10 +1,19 @@
 package com.recommender.mahout;
 
+import java.util.List;
+
+import org.apache.mahout.cf.taste.common.TasteException;
+import org.apache.mahout.cf.taste.common.Weighting;
 import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
 import org.apache.mahout.cf.taste.impl.model.GenericDataModel;
 import org.apache.mahout.cf.taste.impl.model.GenericUserPreferenceArray;
+import org.apache.mahout.cf.taste.impl.recommender.slopeone.MemoryDiffStorage;
+import org.apache.mahout.cf.taste.impl.recommender.slopeone.SlopeOneRecommender;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.model.PreferenceArray;
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
+import org.apache.mahout.cf.taste.recommender.Recommender;
+import org.apache.mahout.cf.taste.recommender.slopeone.DiffStorage;
 
 public class RecommenderRepresentaionTest {
 
@@ -23,7 +32,7 @@ public class RecommenderRepresentaionTest {
 		userPref.setItemID(1, 102L);
 		userPref.setValue(1, 1.3f);
 
-		prefs.put(0, userPref);
+		prefs.put(1L, userPref);
 
 		userPref = new GenericUserPreferenceArray(3);
 		userPref.setUserID(1, 2L);
@@ -36,11 +45,13 @@ public class RecommenderRepresentaionTest {
 		userPref.setItemID(2, 102L);
 		userPref.setValue(2, 3.3f);
 
-		prefs.put(1, userPref);
+		prefs.put(2L, userPref);
 
 		DataModel model = new GenericDataModel(prefs);
 
-		System.out.println(prefs);
+		System.out.println(model);
+			 
+			  
 
 	}
 
