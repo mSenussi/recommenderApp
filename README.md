@@ -1,4 +1,4 @@
-recommender-ws
+recommender-app
 ==============
 
 
